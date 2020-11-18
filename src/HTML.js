@@ -34,7 +34,7 @@ export default class HTML extends PureComponent {
         tagsStyles: PropTypes.object,
         classesStyles: PropTypes.object,
         containerStyle: PropTypes.oneOfType([PropTypes.object, PropTypes.array]),
-        customImageWrapper: PropTypes.object.isRequired,
+        customImageWrapper: PropTypes.func,
         customWrapper: PropTypes.func,
         onLinkPress: PropTypes.func,
         onParsed: PropTypes.func,
@@ -429,6 +429,7 @@ export default class HTML extends PureComponent {
         } = props;
 
         return RNElements && RNElements.length ? RNElements.map((element, index) => {
+            const { customImageWrapper } = this.props
             const { attribs, data, tagName, parentTag, children, nodeIndex, wrapper } = element;
             const Wrapper = wrapper === 'Text' ? Text : View;
             const key = `${wrapper}-${parentIndex}-${nodeIndex}-${tagName}-${index}-${parentTag}`;
