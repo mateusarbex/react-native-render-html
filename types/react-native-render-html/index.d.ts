@@ -165,6 +165,10 @@ declare module "react-native-render-html" {
        */
       customWrapper?: (innerNodes: ReactNode) => ReactNode;
       /**
+       * Your custom image wrapper.
+       */
+      customImageWrapper?: (innerNode: ReactNode) => ReactNode;
+      /**
        * Replace the default loader while fetching a remote website's content.
        */
       remoteLoadingView?: (props: ContainerProps<P>, state: any) => ReactNode;

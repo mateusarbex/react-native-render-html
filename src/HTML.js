@@ -34,6 +34,7 @@ export default class HTML extends PureComponent {
         tagsStyles: PropTypes.object,
         classesStyles: PropTypes.object,
         containerStyle: PropTypes.oneOfType([PropTypes.object, PropTypes.array]),
+        customImageWrapper: PropTypes.object.isRequired,
         customWrapper: PropTypes.func,
         onLinkPress: PropTypes.func,
         onParsed: PropTypes.func,
@@ -461,7 +462,7 @@ export default class HTML extends PureComponent {
                     return undefined;
                 }
                 // If a custom renderer is available for this tag
-                return customRenderer(
+                return tagName === 'img' && customImageWrapper? customImageWrapper(customRenderer(
                     attribs,
                     childElements,
                     convertedCSSStyles,
@@ -475,7 +476,22 @@ export default class HTML extends PureComponent {
                         data,
                         rawChildren: children,
                         ...renderersProps
-                    });
+                      })):
+                      customRenderer(
+                        attribs,
+                        childElements,
+                        convertedCSSStyles,
+                        {
+                            ...props,
+                            parentWrapper: wrapper,
+                            parentTag,
+                            nodeIndex,
+                            parentIndex,
+                            key,
+                            data,
+                            rawChildren: children,
+                            ...renderersProps
+                          });
             }
 
             const classStyles = _getElementClassStyles(attribs, classesStyles);
